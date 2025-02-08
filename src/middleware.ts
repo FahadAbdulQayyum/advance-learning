@@ -1,3 +1,70 @@
+// // middleware.ts
+// import { NextResponse } from 'next/server';
+// import type { NextRequest } from 'next/server';
+// import { isAuthenticated } from './utils/auth';
+
+// export async function middleware(request: NextRequest) {
+//   const pathname = request.nextUrl.pathname;
+
+//   // Log the requested path for debugging
+//   console.log(`Middleware executed for path: ${pathname}`);
+
+//   // Prevent trailing slash redirection
+//   if (pathname.endsWith('/')) {
+//     const newPathname = pathname.slice(0, -1); // Remove trailing slash
+//     console.log(`Redirecting to remove trailing slash: ${newPathname}`);
+//     return NextResponse.redirect(new URL(newPathname, request.url));
+//   }
+
+//   // Define public routes (e.g., sign-in, sign-up)
+//   const publicRoutes = ['/signin', '/signup'];
+//   const isPublicRoute = publicRoutes.some((route) => pathname.startsWith(route));
+
+//   // Check if the user is authenticated
+//   const isLoggedIn = isAuthenticated({ req: request });
+//   console.log(`Is user authenticated? ${isLoggedIn}`);
+
+//   // If the user is not logged in and tries to access a protected route, redirect to /signin
+//   if (!isLoggedIn && !isPublicRoute) {
+//     console.log('Redirecting to /signin');
+//     const signInUrl = new URL('/signin', request.url);
+//     return NextResponse.redirect(signInUrl);
+//   }
+
+//   // If the user is logged in but tries to access a public route (e.g., /signin), redirect to /dashboard
+//   if (isLoggedIn && isPublicRoute) {
+//     console.log('Redirecting to /dashboard');
+//     const dashboardUrl = new URL('/dashboard', request.url);
+//     return NextResponse.redirect(dashboardUrl);
+//   }
+
+//   // Allow the request to proceed
+//   console.log('Allowing request to proceed');
+
+//   // Disable caching for dynamic routes
+//   const response = NextResponse.next();
+//   response.headers.set('Cache-Control', 'no-store');
+//   return response;
+// }
+
+// // Match all routes except static assets and API routes
+// export const config = {
+//   matcher: [
+//     /*
+//      * Match all request paths except for the ones starting with:
+//      * - _next/static (static files)
+//      * - _next/image (image optimization files)
+//      * - favicon.ico (favicon file)
+//      * - api/ (API routes)
+//      * - assets/ (custom static assets like images, fonts, etc.)
+//      */
+//     '/((?!_next/static|_next/image|favicon.ico|api/|assets/).*)',
+//   ],
+// };
+
+
+
+// middleware.ts
 // middleware.ts
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
@@ -6,41 +73,209 @@ import { isAuthenticated } from './utils/auth';
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
-  console.log(`Middleware executed for path: ${pathname}`); // Log the requested path
-
-  // Define public routes (e.g., sign-in)
-  const publicRoutes = ['/signin'];
-  const isPublicRoute = publicRoutes.some((route) => pathname.startsWith(route));
+  console.log(`Middleware executed for path: ${pathname}`);
 
   // Check if the user is authenticated
   const isLoggedIn = isAuthenticated({ req: request });
-  console.log(`Is user authenticated? ${isLoggedIn}`); // Log the authentication status
+  console.log(`Is user authenticated? ${isLoggedIn}`);
+
+  // Define public routes (e.g., sign-in)
+  const publicRoutes = ['/signin', '/signup'];
+  const isPublicRoute = publicRoutes.some((route) => pathname.startsWith(route));
 
   // If the user is not logged in and tries to access a protected route, redirect to /signin
   if (!isLoggedIn && !isPublicRoute) {
-    console.log('Redirecting to /signin'); // Log the redirection
+    console.log('Redirecting to /signin');
     const signInUrl = new URL('/signin', request.url);
     return NextResponse.redirect(signInUrl);
   }
 
   // Allow the request to proceed
-  console.log('Allowing request to proceed'); // Log the allowed request
-  // return NextResponse.next();
-  // Disable caching for dynamic routes
+  console.log('Allowing request to proceed');
   const response = NextResponse.next();
   response.headers.set('Cache-Control', 'no-store');
   return response;
 }
 
-// Match all routes except static assets
+// Match all routes except static assets and API routes
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico).*)',
+    /*
+     * Match all request paths except for the ones starting with:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - api/ (API routes)
+     * - assets/ (custom static assets like images, fonts, etc.)
+     */
+    '/((?!_next/static|_next/image|favicon.ico|api/|assets/).*)',
   ],
 };
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // middleware.ts
+// import { NextResponse } from 'next/server';
+// import type { NextRequest } from 'next/server';
+// import { isAuthenticated } from './utils/auth';
+
+// export async function middleware(request: NextRequest) {
+//   const pathname = request.nextUrl.pathname;
+
+//   console.log(`Middleware executed for path: ${pathname}`); // Log the requested path
+
+//   // Define public routes (e.g., sign-in)
+//   const publicRoutes = ['/signin'];
+//   const isPublicRoute = publicRoutes.some((route) => pathname.startsWith(route));
+
+//   // Check if the user is authenticated
+//   const isLoggedIn = isAuthenticated({ req: request });
+//   console.log(`Is user authenticated? ${isLoggedIn}`); // Log the authentication status
+
+//   // If the user is not logged in and tries to access a protected route, redirect to /signin
+//   if (!isLoggedIn && !isPublicRoute) {
+//     console.log('Redirecting to /signin'); // Log the redirection
+//     const signInUrl = new URL('/signin', request.url);
+//     return NextResponse.redirect(signInUrl);
+//   }
+
+//   // Allow the request to proceed
+//   console.log('Allowing request to proceed'); // Log the allowed request
+//   // return NextResponse.next();
+//   // Disable caching for dynamic routes
+//   const response = NextResponse.next();
+//   response.headers.set('Cache-Control', 'no-store');
+//   return response;
+// }
+
+// // Match all routes except static assets
+// export const config = {
+//   matcher: [
+//     '/((?!_next/static|_next/image|favicon.ico).*)',
+//   ],
+// };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // // // middleware.ts
+// // // import { NextResponse } from 'next/server';
+// // // import type { NextRequest } from 'next/server';
+// // // import { isAuthenticated } from './src/utils/auth';
+
+// // // export async function middleware(request: NextRequest) {
+// // //   const pathname = request.nextUrl.pathname;
+
+// // //   console.log(`Middleware executed for path: ${pathname}`); // Log the requested path
+
+// // //   // Define public routes (e.g., sign-in)
+// // //   const publicRoutes = ['/signin'];
+// // //   const isPublicRoute = publicRoutes.some((route) => pathname.startsWith(route));
+
+// // //   // Check if the user is authenticated
+// // //   const isLoggedIn = isAuthenticated({ req: request });
+// // //   console.log(`Is user authenticated? ${isLoggedIn}`); // Log the authentication status
+
+// // //   // If the user is not logged in and tries to access a protected route, redirect to /signin
+// // //   if (!isLoggedIn && !isPublicRoute) {
+// // //     console.log('Redirecting to /signin'); // Log the redirection
+// // //     const signInUrl = new URL('/signin', request.url);
+// // //     return NextResponse.redirect(signInUrl);
+// // //   }
+
+// // //   // Allow the request to proceed
+// // //   console.log('Allowing request to proceed'); // Log the allowed request
+// // //   const response = NextResponse.next();
+// // //   response.headers.set('Cache-Control', 'no-store');
+// // //   return response;
+// // //   // return NextResponse.next();
+// // // }
+
+// // // // Match all routes except static assets
+// // // export const config = {
+// // //   matcher: [
+// // //     '/((?!_next/static|_next/image|favicon.ico).*)',
+// // //   ],
+// // // };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // // // middleware.ts
+// // // import { NextResponse } from 'next/server';
+// // // import type { NextRequest } from 'next/server';
+// // // import { isAuthenticated } from './src/utils/auth';
+
+// // // export async function middleware(request: NextRequest) {
+// // //   const pathname = request.nextUrl.pathname;
+
+// // //   // Define public routes (e.g., sign-in)
+// // //   const publicRoutes = ['/signin'];
+// // //   const isPublicRoute = publicRoutes.some((route) => pathname.startsWith(route));
+
+// // //   // Check if the user is authenticated
+// // //   const isLoggedIn = isAuthenticated({ req: request });
+
+// // //   // If the user is not logged in and tries to access a protected route, redirect to /signin
+// // //   if (!isLoggedIn && !isPublicRoute) {
+// // //     const signInUrl = new URL('/signin', request.url);
+// // //     return NextResponse.redirect(signInUrl);
+// // //   }
+
+// // //   // Allow the request to proceed
+// // //   return NextResponse.next();
+// // // }
+
+// // // // Match all routes except static assets
+// // // export const config = {
+// // //   matcher: [
+// // //     '/((?!_next/static|_next/image|favicon.ico).*)',
+// // //   ],
+// // // };
 
 
 
@@ -67,70 +302,24 @@ export const config = {
 
 // //   console.log(`Middleware executed for path: ${pathname}`); // Log the requested path
 
-// //   // Define public routes (e.g., sign-in)
-// //   const publicRoutes = ['/signin'];
+// //   // Define public routes (e.g., sign-in, sign-up)
+// //   const publicRoutes = ['/signin', '/signup'];
 // //   const isPublicRoute = publicRoutes.some((route) => pathname.startsWith(route));
 
 // //   // Check if the user is authenticated
 // //   const isLoggedIn = isAuthenticated({ req: request });
-// //   console.log(`Is user authenticated? ${isLoggedIn}`); // Log the authentication status
+// //   console.log('...isLoggedIn...', isLoggedIn)
 
 // //   // If the user is not logged in and tries to access a protected route, redirect to /signin
 // //   if (!isLoggedIn && !isPublicRoute) {
-// //     console.log('Redirecting to /signin'); // Log the redirection
 // //     const signInUrl = new URL('/signin', request.url);
 // //     return NextResponse.redirect(signInUrl);
 // //   }
 
-// //   // Allow the request to proceed
-// //   console.log('Allowing request to proceed'); // Log the allowed request
-// //   const response = NextResponse.next();
-// //   response.headers.set('Cache-Control', 'no-store');
-// //   return response;
-// //   // return NextResponse.next();
-// // }
-
-// // // Match all routes except static assets
-// // export const config = {
-// //   matcher: [
-// //     '/((?!_next/static|_next/image|favicon.ico).*)',
-// //   ],
-// // };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// // // middleware.ts
-// // import { NextResponse } from 'next/server';
-// // import type { NextRequest } from 'next/server';
-// // import { isAuthenticated } from './src/utils/auth';
-
-// // export async function middleware(request: NextRequest) {
-// //   const pathname = request.nextUrl.pathname;
-
-// //   // Define public routes (e.g., sign-in)
-// //   const publicRoutes = ['/signin'];
-// //   const isPublicRoute = publicRoutes.some((route) => pathname.startsWith(route));
-
-// //   // Check if the user is authenticated
-// //   const isLoggedIn = isAuthenticated({ req: request });
-
-// //   // If the user is not logged in and tries to access a protected route, redirect to /signin
-// //   if (!isLoggedIn && !isPublicRoute) {
-// //     const signInUrl = new URL('/signin', request.url);
-// //     return NextResponse.redirect(signInUrl);
+// //   // If the user is logged in but tries to access a public route (e.g., /signin), redirect to /dashboard
+// //   if (isLoggedIn && isPublicRoute) {
+// //     const dashboardUrl = new URL('/dashboard', request.url);
+// //     return NextResponse.redirect(dashboardUrl);
 // //   }
 
 // //   // Allow the request to proceed
@@ -140,68 +329,12 @@ export const config = {
 // // // Match all routes except static assets
 // // export const config = {
 // //   matcher: [
+// //     /*
+// //      * Match all request paths except for the ones starting with:
+// //      * - _next/static (static files)
+// //      * - _next/image (image optimization files)
+// //      * - favicon.ico (favicon file)
+// //      */
 // //     '/((?!_next/static|_next/image|favicon.ico).*)',
 // //   ],
 // // };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// // middleware.ts
-// import { NextResponse } from 'next/server';
-// import type { NextRequest } from 'next/server';
-// import { isAuthenticated } from './src/utils/auth';
-
-// export async function middleware(request: NextRequest) {
-//   const pathname = request.nextUrl.pathname;
-
-//   console.log(`Middleware executed for path: ${pathname}`); // Log the requested path
-
-//   // Define public routes (e.g., sign-in, sign-up)
-//   const publicRoutes = ['/signin', '/signup'];
-//   const isPublicRoute = publicRoutes.some((route) => pathname.startsWith(route));
-
-//   // Check if the user is authenticated
-//   const isLoggedIn = isAuthenticated({ req: request });
-//   console.log('...isLoggedIn...', isLoggedIn)
-
-//   // If the user is not logged in and tries to access a protected route, redirect to /signin
-//   if (!isLoggedIn && !isPublicRoute) {
-//     const signInUrl = new URL('/signin', request.url);
-//     return NextResponse.redirect(signInUrl);
-//   }
-
-//   // If the user is logged in but tries to access a public route (e.g., /signin), redirect to /dashboard
-//   if (isLoggedIn && isPublicRoute) {
-//     const dashboardUrl = new URL('/dashboard', request.url);
-//     return NextResponse.redirect(dashboardUrl);
-//   }
-
-//   // Allow the request to proceed
-//   return NextResponse.next();
-// }
-
-// // Match all routes except static assets
-// export const config = {
-//   matcher: [
-//     /*
-//      * Match all request paths except for the ones starting with:
-//      * - _next/static (static files)
-//      * - _next/image (image optimization files)
-//      * - favicon.ico (favicon file)
-//      */
-//     '/((?!_next/static|_next/image|favicon.ico).*)',
-//   ],
-// };

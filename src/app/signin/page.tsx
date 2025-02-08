@@ -48,7 +48,7 @@ const SignIn = () => {
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         required
-                        style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}
+                        style={{ width: '100%', padding: '8px', boxSizing: 'border-box', color: 'black' }}
                     />
                 </div>
                 <div style={{ marginBottom: '15px' }}>
@@ -61,7 +61,7 @@ const SignIn = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
-                        style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}
+                        style={{ width: '100%', padding: '8px', boxSizing: 'border-box', color: 'black' }}
                     />
                 </div>
                 <button type="submit" style={{ padding: '10px 15px', backgroundColor: '#007bff', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
